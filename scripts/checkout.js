@@ -1,13 +1,16 @@
-import { cart, removeFromCart } from "../data/cart.js";
+import { cart, removeFromCart, updateDeliveryOption } from "../data/cart.js";
 import products from "../data/products.js";
 import formatCurrency from "./utils/money.js";
-import deliveryOptions from "../data/deliveryOptions.js";
-import dayjs from "https://unpkg.com/dayjs@1.11.10/esm/index.js";
+import {
+  deliveryOptions,
+  deliveryOptionDate,
+} from "../data/deliveryOptions.js";
+import { dayAfter } from "./utils/dayjs.js";
+
+
 
 let orderSummaryHTML = "";
-
 cart.forEach((cartItem) => {
-
   const productId = cartItem.productId;
   let productName, productImage, productPriceCents;
   products.forEach((product) => {
@@ -90,7 +93,9 @@ function deliveryOptionsHTML(productId) {
                   <input type="radio" 
                   ${deliveryOption.id === deliveryOptionId ? "checked" : ""}
                     class="delivery-option-input"
-                    name="delivery-option-${productId}">
+                    name="delivery-option-${productId}"
+                    value="${deliveryOption.id}"
+                    data-product-id="${productId}">
                   <div>
                     <div class="delivery-option-date">
                       ${deliveryDate}
@@ -104,19 +109,20 @@ function deliveryOptionsHTML(productId) {
   return html;
 }
 
-function dayAfter(daysNum) {
-  const today = dayjs();
-  return today.add(daysNum, "days").format("dddd, MMMM D");
-}
+document.querySelectorAll('input[type="radio"]').forEach((radio) => {
+  radio.addEventListener("click", () => {
+    const deliveryOptionId = radio.value;
+    const productId = radio.dataset.productId;
+    updateDeliveryOption(productId, deliveryOptionId);
+    updateDeliveryDate();
+  });
+});
 
-function deliveryOptionDate(deliveryOptionId) {
-  let deliveryDate;
-  if (deliveryOptionId === "1") {
-    deliveryDate = dayAfter(7);
-  } else if (deliveryOptionId === "2") {
-    deliveryDate = dayAfter(3);
-  } else {
-    deliveryDate = dayAfter(1);
-  }
-  return deliveryDate;
+function updateDeliveryDate() {
+  cart.forEach((cartItem) => {
+    let deliveryDate = deliveryOptionDate(cartItem.deliveryOptionId);
+    document.querySelector(
+      `.js-cart-item-container-${cartItem.productId} .delivery-date`
+    ).innerHTML = `Delivery date: ${deliveryDate}`;
+  });
 }

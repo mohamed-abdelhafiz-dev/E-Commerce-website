@@ -1,4 +1,5 @@
-const deliveryOptions = [
+import { dayAfter } from "../scripts/utils/dayjs.js";
+export const deliveryOptions = [
   {
     id: "1",
     deliveryDays: 7,
@@ -15,4 +16,14 @@ const deliveryOptions = [
     priceCents: 999,
   },
 ];
-export default deliveryOptions;
+export function deliveryOptionDate(deliveryOptionId) {
+  let deliveryDate;
+  if (deliveryOptionId === "1") {
+    deliveryDate = dayAfter(7);
+  } else if (deliveryOptionId === "2") {
+    deliveryDate = dayAfter(3);
+  } else {
+    deliveryDate = dayAfter(1);
+  }
+  return deliveryDate;
+}
