@@ -27,3 +27,13 @@ export function deliveryOptionDate(deliveryOptionId) {
   }
   return deliveryDate;
 }
+
+export function getOption(deliveryOptionId) {
+  let matchingOption;
+  deliveryOptions.forEach((option) => {
+    if (deliveryOptionId === option.id) {
+      matchingOption = option;
+    }
+  });
+  return matchingOption;
+}
