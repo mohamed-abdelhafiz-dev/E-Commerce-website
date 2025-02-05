@@ -1,4 +1,9 @@
-import { cart, removeFromCart, updateDeliveryOption } from "../../data/cart.js";
+import {
+  cart,
+  removeFromCart,
+  updateDeliveryOption,
+  updateQuantityInCart,
+} from "../../data/cart.js";
 import { getProduct } from "../../data/products.js";
 import formatCurrency from "../utils/money.js";
 import {
@@ -41,16 +46,14 @@ export function renderOrderSummary() {
                   </div>
                   <div class="product-quantity">
                     <span>
-                      Quantity: <span class="quantity-label">${
+                      Quantity:
+                      <input type="number" min="1" disabled value="${
                         cartItem.quantity
-                      }</span>
+                      }" class="quantity-input quantity-input-${productId}">
+                      
                     </span>
-                    <span class="update-quantity-link link-primary">
-                      Update
-                    </span>
-                    <span class="delete-quantity-link js-delete-link link-primary" data-product-id="${productId}">
-                      Delete
-                    </span>
+                    <span class="update-quantity-link link-primary js-update-link update-${productId}" data-product-id="${productId}">Update</span>
+                    <span class="delete-quantity-link link-primary js-delete-link" data-product-id="${productId}">Delete</span>
                   </div>
                 </div>
 
@@ -65,6 +68,25 @@ export function renderOrderSummary() {
     `;
     });
     document.querySelector(".js-order-summary").innerHTML = orderSummaryHTML;
+
+    document.querySelectorAll(".js-update-link").forEach((link) => {
+      link.addEventListener("click", () => {
+        const productId = link.dataset.productId;
+        const quantityInput = document.querySelector(
+          `.quantity-input-${productId}`
+        );
+
+        if (link.innerText === "Update") {
+          quantityInput.removeAttribute("disabled");
+          link.innerText = "Save";
+        } else {
+          updateQuantityInCart(productId, Number(quantityInput.value));
+          renderOrderSummary();
+          renderPaymentSummary();
+          renderCheckoutHeader();
+        }
+      });
+    });
 
     document.querySelectorAll(".js-delete-link").forEach((link) => {
       const productId = link.dataset.productId;
