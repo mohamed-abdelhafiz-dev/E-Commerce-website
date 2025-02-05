@@ -7,18 +7,18 @@ import {
 } from "../../data/deliveryOptions.js";
 import { dayAfter } from "../utils/dayjs.js";
 import { renderPaymentSummary } from "./paymentSummary.js";
-import { renderElementsHeader } from "../checkout.js";
+import { renderCheckoutHeader } from "./checkoutHeader.js";
 
 export function renderOrderSummary() {
   let orderSummaryHTML = "";
   if (cart.length) {
     cart.forEach((cartItem) => {
       const productId = cartItem.productId;
-      let productName, productImage, productPriceCents;
+      let productName, productImage, productPrice;
       const product = getProduct(productId);
-      productName = product.name;
-      productImage = product.image;
-      productPriceCents = product.priceCents;
+      productName = product.getName();
+      productImage = product.getImage();
+      productPrice = product.getPrice();
 
       let deliveryDate = deliveryOptionDate(cartItem.deliveryOptionId);
 
@@ -37,7 +37,7 @@ export function renderOrderSummary() {
                     ${productName}
                   </div>
                   <div class="product-price">
-                    $${formatCurrency(productPriceCents)}
+                    $${productPrice}
                   </div>
                   <div class="product-quantity">
                     <span>
@@ -73,13 +73,12 @@ export function renderOrderSummary() {
         document.querySelector(`.js-cart-item-container-${productId}`).remove();
         renderOrderSummary();
         renderPaymentSummary();
-        renderElementsHeader();
+        renderCheckoutHeader();
       });
     });
 
     document.querySelectorAll(".delivery-option").forEach((option) => {
       option.addEventListener("click", () => {
-        console.log(8);
         const { productId, deliveryOptionId } = option.dataset;
         updateDeliveryOption(productId, deliveryOptionId);
         renderOrderSummary();

@@ -29,11 +29,5 @@ export function deliveryOptionDate(deliveryOptionId) {
 }
 
 export function getOption(deliveryOptionId) {
-  let matchingOption;
-  deliveryOptions.forEach((option) => {
-    if (deliveryOptionId === option.id) {
-      matchingOption = option;
-    }
-  });
-  return matchingOption;
+  return deliveryOptions.find((option) => option.id === deliveryOptionId);
 }

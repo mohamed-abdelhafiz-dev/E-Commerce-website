@@ -8,8 +8,9 @@ export function renderPaymentSummary() {
     ShippingPrice = 0,
     totalBeforeTax = 0,
     estimatedTax = 0,
-    orderTotal = 0;
-  let deliveryOptionPrice, deliveryOptionId;
+    orderTotal = 0,
+    deliveryOptionPrice,
+    deliveryOptionId;
   if (cart) {
     cart.forEach((cartItem) => {
       itemsNumber += cartItem.quantity;
@@ -22,9 +23,8 @@ export function renderPaymentSummary() {
   cart.forEach((cartItem) => {
     const productId = cartItem.productId;
     const quantity = cartItem.quantity;
-    let itemsPrice;
     const product = getProduct(productId);
-    itemsPrice = formatCurrency(product.priceCents);
+    let itemsPrice = product.getPrice();
     totalPrice += itemsPrice * quantity;
   });
   totalBeforeTax = totalPrice + ShippingPrice;
