@@ -1,11 +1,22 @@
 //import * as cartModule from "../data/cart.js";
 import { cart, addToCart } from "../data/cart.js";
-import { products } from "../data/products.js";
-import formatCurrency from "./utils/money.js";
+import { products, loadProducts } from "../data/products.js";
+
 updateCartQuantity();
-let productsHTML = "";
-products.forEach((product) => {
-  productsHTML += `
+
+loadProducts(renderProductsGrid);
+
+function updateCartQuantity() {
+  let cartQuantity = 0;
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
+}
+function renderProductsGrid() {
+  let productsHTML = "";
+  products.forEach((product) => {
+    productsHTML += `
       <div class="product-container">
           <div class="product-image-container">
             <img
@@ -58,31 +69,24 @@ products.forEach((product) => {
           </button>
         </div>
   `;
-});
-document.querySelector(".js-products-grid").innerHTML = productsHTML;
-
-function updateCartQuantity() {
-  let cartQuantity = 0;
-  cart.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;
   });
-  document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
-}
+  document.querySelector(".js-products-grid").innerHTML = productsHTML;
 
-document.querySelectorAll(".js-add-to-cart").forEach((button) => {
-  button.addEventListener("click", () => {
-    const productId = button.dataset.productId;
-    const productQuantity = Number(
-      document.querySelector(`.js-quantity-select-${productId}`).value
-    );
-    addToCart(productId, productQuantity);
-    showAddedLabel(productId);
-    updateCartQuantity();
+  document.querySelectorAll(".js-add-to-cart").forEach((button) => {
+    button.addEventListener("click", () => {
+      const productId = button.dataset.productId;
+      const productQuantity = Number(
+        document.querySelector(`.js-quantity-select-${productId}`).value
+      );
+      addToCart(productId, productQuantity);
+      showAddedLabel(productId);
+      updateCartQuantity();
+    });
   });
-});
-function showAddedLabel(productId) {
-  document.querySelector(`.added-to-cart-${productId}`).style.opacity = "1";
-  setTimeout(() => {
-    document.querySelector(`.added-to-cart-${productId}`).style.opacity = "0";
-  }, 900);
+  function showAddedLabel(productId) {
+    document.querySelector(`.added-to-cart-${productId}`).style.opacity = "1";
+    setTimeout(() => {
+      document.querySelector(`.added-to-cart-${productId}`).style.opacity = "0";
+    }, 900);
+  }
 }
