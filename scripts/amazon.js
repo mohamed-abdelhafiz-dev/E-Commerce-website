@@ -1,9 +1,8 @@
-import { cart, addToCart} from "../data/cart.js";
-import { products, loadProducts } from "../data/products.js";
+import { cart, addToCart } from "../data/cart.js";
+import { products, fetchProducts } from "../data/products.js";
 updateCartQuantity();
-new Promise((resolve) => {
-  loadProducts(resolve);
-}).then(() => {
+
+fetchProducts().then(() => {
   renderProductsGrid();
 });
 

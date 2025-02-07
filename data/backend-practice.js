@@ -13,19 +13,17 @@
 // const xhr = new XMLHttpRequest();
 // xhr.open("get", "https://supersimplebackend.dev/products");
 
-// new Promise((resolve, reject) => {
+// const x = new Promise((resolve, reject) => {
 //   xhr.addEventListener("load", () => {
-//     if (Array.isArray(JSON.parse(xhr.response))) {
-//       resolve("hi");
-//     } else {
-//       reject("bye");
-//     }
+//     resolve();
 //   });
 //   xhr.send();
-// })
-//   .then((x) => {
-//     console.log("then" + x);
+// }).then(() => {
+//   console.log(Date.now());
+// });
+
+// console.log(
+//   x.catch(() => {
+//     console.log(Date.now());
 //   })
-//   .catch((x) => {
-//     console.log("catch" + x);
-//   });
+// );

@@ -554,24 +554,47 @@ class clothing extends Product {
 export function getProduct(productId) {
   return products.find((product) => product.getId() === productId);
 }
+
 export let products = [];
-export function loadProducts(callBackFun) {
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", "https://supersimplebackend.dev/products");
-  xhr.addEventListener("load", () => {
-    products = JSON.parse(xhr.response).map((productDetails) =>
-      productDetails.type === "clothing"
-        ? new clothing(productDetails)
-        : new Product(productDetails)
-    );
-    products
-      .find(
-        (product) =>
-          product.getImage() ===
-          "images/products/women-chiffon-beachwear-coverup-black.jpg"
-      )
-      .setImage("images/products/wome-chiffon-beachwear-coverup-black.jpg");
-    callBackFun();
-  });
-  xhr.send();
+
+export function fetchProducts() {
+  return fetch("https://supersimplebackend.dev/products")
+    .then((response) => {
+      return response.json();
+    })
+    .then((productsList) => {
+      products = productsList.map((productDetails) =>
+        productDetails.type === "clothing"
+          ? new clothing(productDetails)
+          : new Product(productDetails)
+      );
+      products
+        .find(
+          (product) =>
+            product.getImage() ===
+            "images/products/women-chiffon-beachwear-coverup-black.jpg"
+        )
+        .setImage("images/products/wome-chiffon-beachwear-coverup-black.jpg");
+    });
 }
+
+// export function loadProducts(callBackFun) {
+//   const xhr = new XMLHttpRequest();
+//   xhr.open("GET", "https://supersimplebackend.dev/products");
+//   xhr.addEventListener("load", () => {
+//     products = JSON.parse(xhr.response).map((productDetails) =>
+//       productDetails.type === "clothing"
+//         ? new clothing(productDetails)
+//         : new Product(productDetails)
+//     );
+//     products
+//       .find(
+//         (product) =>
+//           product.getImage() ===
+//           "images/products/women-chiffon-beachwear-coverup-black.jpg"
+//       )
+//       .setImage("images/products/wome-chiffon-beachwear-coverup-black.jpg");
+//     callBackFun();
+//   });
+//   xhr.send();
+// }

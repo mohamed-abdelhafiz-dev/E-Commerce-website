@@ -41,11 +41,16 @@ export function updateQuantityInCart(productId, newQuantity) {
   saveCartToStorage();
 }
 
-export function loadCart(callBackFun) {
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", "https://supersimplebackend.dev/cart");
-  xhr.addEventListener("load", () => {
-    callBackFun();
-  });
-  xhr.send();
-}
+// export function loadCart(callBackFun) {
+//   const xhr = new XMLHttpRequest();
+//   xhr.open("GET", "https://supersimplebackend.dev/cart");
+//   xhr.addEventListener("load", () => {
+//     callBackFun();
+//   });
+//   xhr.send();
+// }
+// export function fetchCart() {
+//   return fetch("https://supersimplebackend.dev/cart").then((response) => {
+//     return response.text();
+//   });
+// }
