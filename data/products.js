@@ -564,6 +564,13 @@ export function loadProducts(callBackFun) {
         ? new clothing(productDetails)
         : new Product(productDetails)
     );
+    products
+      .find(
+        (product) =>
+          product.getImage() ===
+          "images/products/women-chiffon-beachwear-coverup-black.jpg"
+      )
+      .setImage("images/products/wome-chiffon-beachwear-coverup-black.jpg");
     callBackFun();
   });
   xhr.send();
