@@ -1,9 +1,11 @@
-import { cart, addToCart } from "../data/cart.js";
+import { cart, addToCart} from "../data/cart.js";
 import { products, loadProducts } from "../data/products.js";
-
 updateCartQuantity();
-
-loadProducts(renderProductsGrid);
+new Promise((resolve) => {
+  loadProducts(resolve);
+}).then(() => {
+  renderProductsGrid();
+});
 
 function updateCartQuantity() {
   let cartQuantity = 0;

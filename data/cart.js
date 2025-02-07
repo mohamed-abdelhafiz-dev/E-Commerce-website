@@ -40,3 +40,12 @@ export function updateQuantityInCart(productId, newQuantity) {
   matchingItem.quantity = newQuantity;
   saveCartToStorage();
 }
+
+export function loadCart(callBackFun) {
+  const xhr = new XMLHttpRequest();
+  xhr.open("GET", "https://supersimplebackend.dev/cart");
+  xhr.addEventListener("load", () => {
+    callBackFun();
+  });
+  xhr.send();
+}
