@@ -41,16 +41,12 @@ export function updateQuantityInCart(productId, newQuantity) {
   saveCartToStorage();
 }
 
-// export function loadCart(callBackFun) {
-//   const xhr = new XMLHttpRequest();
-//   xhr.open("GET", "https://supersimplebackend.dev/cart");
-//   xhr.addEventListener("load", () => {
-//     callBackFun();
-//   });
-//   xhr.send();
-// }
-// export function fetchCart() {
-//   return fetch("https://supersimplebackend.dev/cart").then((response) => {
-//     return response.text();
-//   });
-// }
+export async function loadCart() {
+  try {
+    const response = await fetch("https://supersimplebackend.dev/cart");
+    const cart = await response.text();
+    console.log(cart);
+  } catch (error) {
+    console.log("failed to fetch the cart", error);
+  }
+}

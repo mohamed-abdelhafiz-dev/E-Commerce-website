@@ -1,10 +1,7 @@
-import { cart, addToCart } from "../data/cart.js";
-import { products, fetchProducts } from "../data/products.js";
-updateCartQuantity();
+import { cart, addToCart, loadCart } from "../data/cart.js";
+import { products, loadProducts } from "../data/products.js";
 
-fetchProducts().then(() => {
-  renderProductsGrid();
-});
+renderProductsPage();
 
 function updateCartQuantity() {
   let cartQuantity = 0;
@@ -13,7 +10,11 @@ function updateCartQuantity() {
   });
   document.querySelector(".js-cart-quantity").innerHTML = cartQuantity;
 }
-function renderProductsGrid() {
+async function renderProductsPage() {
+  await loadProducts();
+  await loadCart();
+  document.querySelector(".loader").classList.add("hidden");
+  updateCartQuantity();
   let productsHTML = "";
   products.forEach((product) => {
     productsHTML += `
