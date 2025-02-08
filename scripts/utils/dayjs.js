@@ -3,3 +3,6 @@ export function dayAfter(daysNum) {
   const today = dayjs();
   return today.add(daysNum, "days").format("dddd, MMMM D");
 }
+export function formatDate(date) {
+  return dayjs(date).format("MMMM D");
+}
