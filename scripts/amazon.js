@@ -65,7 +65,7 @@ function renderProductsHTML(products) {
             </select>
           </div>
           
-              ${product.addExtraInfo()}
+             
               
           <div class="product-spacer"></div>
           
