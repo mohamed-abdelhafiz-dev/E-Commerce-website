@@ -1,9 +1,12 @@
 import { getProduct, loadProducts } from "../data/products.js";
 import { orders } from "../data/orders.js";
 import { formatDate, today } from "./utils/dayjs.js";
+import { search } from "./utils/sharedFunctions.js";
 loadTrackingPage();
 async function loadTrackingPage() {
   await loadProducts();
+  document.querySelector(".loader").classList.add("hidden");
+
   const searchParams = new URLSearchParams(window.location.search);
   const orderId = searchParams.get("orderId");
   const productId = searchParams.get("productId");
@@ -70,3 +73,15 @@ function daysBetweenUTC(date1, date2) {
 
   return Math.abs((d2 - d1) / (1000 * 60 * 60 * 24));
 }
+
+const searchBox = document.querySelector(".search-bar");
+searchBox.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    search(searchBox.value);
+  }
+});
+const searchButton = document.querySelector(".search-button");
+searchButton.addEventListener("click", () => {
+  search(searchBox.value);
+});

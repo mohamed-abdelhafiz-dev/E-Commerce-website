@@ -4,10 +4,12 @@ import { formatDate } from "./utils/dayjs.js";
 import { itemsNumberInCart } from "./checkout/checkoutHeader.js";
 import { getProduct, loadProducts } from "../data/products.js";
 import { addToCart } from "../data/cart.js";
+import { search } from "./utils/sharedFunctions.js";
 loadOrdersPage();
 async function loadOrdersPage() {
   await loadProducts();
   updateQuantityNumber();
+  document.querySelector(".loader").classList.add("hidden");
 
   let ordersHTML = "";
   orders.forEach((order) => {
@@ -94,3 +96,14 @@ async function loadOrdersPage() {
 function updateQuantityNumber() {
   document.querySelector(".cart-quantity").innerHTML = itemsNumberInCart();
 }
+const searchBox = document.querySelector(".search-bar");
+searchBox.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    search(searchBox.value);
+  }
+});
+const searchButton = document.querySelector(".search-button");
+searchButton.addEventListener("click", () => {
+  search(searchBox.value);
+});

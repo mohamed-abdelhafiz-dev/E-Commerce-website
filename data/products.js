@@ -82,21 +82,15 @@ export let products = [];
 
 export async function loadProducts() {
   try {
-    const response = await fetch("https://supersimplebackend.dev/products");
+    const response = await fetch("https://supersimplebackend.dev/products/");
     const productsList = await response.json();
     products = productsList.map((productDetails) =>
       productDetails.type === "clothing"
         ? new Clothing(productDetails)
         : new Product(productDetails)
     );
-    products
-      .find(
-        (product) =>
-          product.getImage() ===
-          "images/products/women-chiffon-beachwear-coverup-black.jpg"
-      )
-      .setImage("images/products/wome-chiffon-beachwear-coverup-black.jpg");
   } catch (error) {
     console.log(error);
   }
 }
+
