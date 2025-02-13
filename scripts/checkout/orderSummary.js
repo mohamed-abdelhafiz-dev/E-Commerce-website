@@ -110,7 +110,7 @@ export function renderOrderSummary() {
   } else {
     orderSummaryHTML = `
         <p>Your cart is empty.</p>
-        <a href="amazon.html"
+        <a href="index.html"
           ><button
             class="button-primary place-order-button"
             style="width: fit-content; font-size: 16px; padding: 8px 15px"
