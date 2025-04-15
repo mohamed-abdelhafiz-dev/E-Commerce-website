@@ -20,7 +20,21 @@ A multi-page e-commerce website inspired by Amazon, built using HTML, CSS, and J
 
 ## 📁 Project Structure
 
-E-Commerce-website/ ├── backend/ ├── data/ ├── images/ ├── scripts/ │ └── main.js ├── styles/ │ └── style.css ├── tests/ ├── checkout.html ├── index.html ├── orders.html └── tracking.html
+E-Commerce-website/
+
+         ├── backend/             # Backend logic or API (if applicable)
+         ├── data/                # Data files or mock data
+         ├── images/              # Image assets
+         ├── scripts/
+         │   └── main.js          # JavaScript functionality
+         ├── styles/
+         │   └── style.css        # Styling with CSS
+         ├── tests/               # Unit or integration tests
+         ├── checkout.html        # Checkout page
+         ├── index.html           # Landing/home page
+         ├── orders.html          # Orders summary or history page
+         └── tracking.html        # Order tracking page
+
 
 ## 📦 Installation
 
