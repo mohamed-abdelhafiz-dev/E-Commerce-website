@@ -2,9 +2,14 @@ import { getProduct, loadProducts } from "../data/products.js";
 import { orders } from "../data/orders.js";
 import { formatDate, today } from "./utils/dayjs.js";
 import { search } from "./utils/sharedFunctions.js";
+import { itemsNumberInCart } from "./checkout/checkoutHeader.js";
 loadTrackingPage();
+function updateQuantityNumber() {
+  document.querySelector(".cart-quantity").innerHTML = itemsNumberInCart();
+}
 async function loadTrackingPage() {
   await loadProducts();
+  updateQuantityNumber();
   document.querySelector(".loader").classList.add("hidden");
 
   const searchParams = new URLSearchParams(window.location.search);
